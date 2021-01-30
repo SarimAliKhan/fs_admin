@@ -89,7 +89,9 @@ const UpdateAddProduct = () => {
     ])
       .then((values) => {
         setAttributesList(values[0]);
+        console.log("VAL", values);
         setAttributesDetailsList(values[1]);
+
         setCategoryList(values[2]);
         setCollectionsList(values[3]);
         setIncomingImages(values[4]);
@@ -418,6 +420,7 @@ const UpdateAddProduct = () => {
         tempComb.push(Number(attributeValue.value));
       }
       let imgList = [];
+      console.log("final image", finalImage);
       for (let l = 0; l < finalImage[i].length; l++) {
         imgList.push(finalImage[i][l]);
       }
@@ -459,6 +462,8 @@ const UpdateAddProduct = () => {
       ProductCategory: category,
     };
     console.log(finalObj);
+    {
+      /*}
     if (
       productName == "" ||
       productUsp == "" ||
@@ -470,20 +475,21 @@ const UpdateAddProduct = () => {
       finalImage.length == 0
     ) {
       alert("please Enter the required field");
-    } else {
-      postNewProduct(finalObj)
-        .then((res) => {
-          if (res.code == 1) {
-            alert("Product uploaded");
-          } else {
-            alert(res.message);
-          }
-        })
-        .catch((err) => {
-          alert(err);
-        });
-      console.log(finalObj);
+    } */
     }
+
+    postNewProduct(finalObj)
+      .then((res) => {
+        if (res.code == 1) {
+          alert("Product uploaded");
+        } else {
+          alert(res.message);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+    console.log("FINAL OBJECT : ", finalObj);
   };
 
   return (
