@@ -45,6 +45,7 @@ const UpdateAddProduct = () => {
   const [categoryList, setCategoryList] = useState([]);
   const [collectionsList, setCollectionsList] = useState([]);
   const [category, setCategory] = useState(null);
+  const [pro, prod] = useState(null);
   const [collection, setCollection] = useState([]);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
@@ -88,10 +89,9 @@ const UpdateAddProduct = () => {
       getImages(),
     ])
       .then((values) => {
-        setAttributesList(values[0]);
         console.log("VAL", values);
+        setAttributesList(values[0]);
         setAttributesDetailsList(values[1]);
-
         setCategoryList(values[2]);
         setCollectionsList(values[3]);
         setIncomingImages(values[4]);
@@ -107,6 +107,7 @@ const UpdateAddProduct = () => {
   };
   // handle final image
   const handleFinalImage = () => {
+    console.log("ATTID : ", pro);
     const FI = [...finalImage];
     FI.push(image);
     setFinalImage(FI);
@@ -246,6 +247,9 @@ const UpdateAddProduct = () => {
                     {attributesDetailsList.map((attributeDetail) =>
                       attributeDetail.attId == item.id ? (
                         <option
+                          onChange={(attributeDetail) =>
+                            prod.setState(attributeDetail.attDetailsId)
+                          }
                           key={attributeDetail.attDetailsId}
                           value={attributeDetail.attDetailsId}
                         >
@@ -261,7 +265,6 @@ const UpdateAddProduct = () => {
                       <ImagePicker
                         images={inComingImages.map((image, i) => ({
                           src: image.url,
-                          value: i,
                         }))}
                         onPick={onPick}
                       />
@@ -402,6 +405,8 @@ const UpdateAddProduct = () => {
   // data will be submitted using this method
   const SubmitData = () => {
     var temp = [];
+    var tempProductTemp = [];
+    console.log("count", counter);
     for (let i = 0; i < counter; i++) {
       let sku = document.getElementById(`sku${i}`).value;
       let quantity = parseInt(document.getElementById(`quantity${i}`).value);
@@ -417,6 +422,12 @@ const UpdateAddProduct = () => {
         let attributeValue = document.getElementById(
           `attribute${i}${attribute[j].id}`
         );
+        var obj = {
+          image: "",
+          attribute_detail_id: attributeValue.value,
+          imageName: "",
+        };
+        tempProductTemp.push(obj);
         tempComb.push(Number(attributeValue.value));
       }
       let imgList = [];
@@ -435,11 +446,11 @@ const UpdateAddProduct = () => {
         weight,
         isSoldOut: soldout,
         isComingSoon: comingsoon,
-        primaryImage: imgList[0] || null,
-        secondaryImage: imgList[1] || null,
-        image_one: imgList[2] || null,
-        image_two: imgList[3] || null,
-        image_three: imgList[4] || null,
+        primaryImage: imgList[0] ? imgList[0].src : null,
+        secondaryImage: imgList[1] ? imgList[1].src : null,
+        image_one: imgList[2] ? imgList[2].src : null,
+        image_two: imgList[3] ? imgList[3].src : null,
+        image_three: imgList[4] ? imgList[4] : null,
       };
       temp.push(obj);
     }
@@ -458,7 +469,7 @@ const UpdateAddProduct = () => {
         is_deactivated: deactivated,
       },
       ProductVariations: temp,
-      ProductAttributes: finalImage,
+      ProductAttributes: tempProductTemp,
       ProductCategory: category,
     };
     console.log(finalObj);
@@ -489,6 +500,7 @@ const UpdateAddProduct = () => {
       .catch((err) => {
         alert(err);
       });
+
     console.log("FINAL OBJECT : ", finalObj);
   };
 
