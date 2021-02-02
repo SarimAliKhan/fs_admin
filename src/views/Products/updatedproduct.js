@@ -46,6 +46,7 @@ const UpdateAddProduct = () => {
   const [collectionsList, setCollectionsList] = useState([]);
   const [category, setCategory] = useState(null);
   const [pro, prod] = useState(null);
+  const [opt, setOpt] = useState("");
   const [collection, setCollection] = useState([]);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
@@ -198,6 +199,7 @@ const UpdateAddProduct = () => {
   const handleCollections = (e) => {
     setCollection(e.target.value);
   };
+
   // onclick re render the same ui
   const handleReRender = () => {
     if (attribute.length == 0) {
@@ -262,12 +264,14 @@ const UpdateAddProduct = () => {
                 <Dialog open={open} onClose={() => setOpen(false)}>
                   <Grid container style={{ overflowY: "scroll" }}>
                     <Grid item style={{ margin: "30px" }}>
-                      <ImagePicker
-                        images={inComingImages.map((image, i) => ({
-                          src: image.url,
-                        }))}
-                        onPick={onPick}
-                      />
+                      {inComingImages ? (
+                        <ImagePicker
+                          images={inComingImages.map((image, i) => ({
+                            src: image.url,
+                          }))}
+                          onPick={onPick}
+                        />
+                      ) : null}
                     </Grid>
                   </Grid>
                 </Dialog>
@@ -402,6 +406,19 @@ const UpdateAddProduct = () => {
     }
   };
 
+  const check = (list, id) => {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].attribute_detail_id == id) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const setopt = (e) => {
+    console.log(e.target.options);
+  };
+
   // data will be submitted using this method
   const SubmitData = () => {
     var temp = [];
@@ -422,14 +439,24 @@ const UpdateAddProduct = () => {
         let attributeValue = document.getElementById(
           `attribute${i}${attribute[j].id}`
         );
+
+        var value = document.getElementById(`attribute${i}${attribute[j].id}`)
+          .options[
+          document.getElementById(`attribute${i}${attribute[j].id}`)
+            .selectedIndex
+        ].text;
         var obj = {
           image: "",
           attribute_detail_id: attributeValue.value,
           imageName: "",
         };
-        tempProductTemp.push(obj);
-        tempComb.push(Number(attributeValue.value));
+        if (check(tempProductTemp, attributeValue.value)) {
+          tempProductTemp.push(obj);
+        }
+
+        tempComb.push(value);
       }
+
       let imgList = [];
       console.log("final image", finalImage);
       for (let l = 0; l < finalImage[i].length; l++) {
@@ -571,8 +598,8 @@ const UpdateAddProduct = () => {
                   </MenuItem>
                   {categoryList.map((category) => (
                     <MenuItem
-                      key={category.catId}
                       id={category.catId}
+                      key={category.catId}
                       value={category.catId}
                     >
                       {category.catName}
@@ -679,6 +706,10 @@ const UpdateAddProduct = () => {
         >
           Submit Data
         </Button>
+        <Input type="select" onChange={(e) => setopt(e)}>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+        </Input>
       </Paper>
     </ThemeProvider>
   );

@@ -1,11 +1,17 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import {  UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle,Nav } from 'reactstrap';
-import PropTypes from 'prop-types';
-import option_icon from '../../views/Images/options.png'
-import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import logo from '../../assets/img/brand/logo.svg'
-import sygnet from '../../assets/img/brand/sygnet.svg'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import {
+  UncontrolledDropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Nav,
+} from "reactstrap";
+import PropTypes from "prop-types";
+import option_icon from "../../views/Images/options.png";
+import { AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
+import logo from "../../assets/img/brand/logo.svg";
+import sygnet from "../../assets/img/brand/sygnet.svg";
 
 const propTypes = {
   children: PropTypes.node,
@@ -15,7 +21,6 @@ const defaultProps = {};
 
 class DefaultHeader extends Component {
   render() {
-
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
 
@@ -23,9 +28,11 @@ class DefaultHeader extends Component {
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         {/* <AppNavbarBrand */}
-          {/* // full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
+        {/* // full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
           // minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }} */}
-          <h3 style={{paddingLeft: '20px', marginRight: '50px'}}>LUXE Admin</h3>
+        <h3 style={{ paddingLeft: "20px", marginRight: "50px" }}>
+          Fs Abayas Admin
+        </h3>
         {/* // /> */}
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 
@@ -41,20 +48,36 @@ class DefaultHeader extends Component {
           </NavItem>
         </Nav> */}
         <Nav className="ml-auto" navbar>
-        <UncontrolledDropdown nav direction="down">
+          <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>
               <img src={option_icon} className="img-avatar" alt="admin" />
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem header tag="div" className="text-center"><strong>Interface</strong></DropdownItem>
-              <DropdownItem><Link to="/cms" className="nav-link text-dark"><i className="fa fa-image"></i> CMS</Link></DropdownItem>
-              <DropdownItem header tag="div" className="text-center"><strong>Personal</strong></DropdownItem>
-              <DropdownItem><Link to="#" className="nav-link text-dark"><i className="fa fa-user"></i> Profile</Link></DropdownItem>
+              <DropdownItem header tag="div" className="text-center">
+                <strong>Interface</strong>
+              </DropdownItem>
+              <DropdownItem>
+                <Link to="/cms" className="nav-link text-dark">
+                  <i className="fa fa-image"></i> CMS
+                </Link>
+              </DropdownItem>
+              <DropdownItem header tag="div" className="text-center">
+                <strong>Personal</strong>
+              </DropdownItem>
+              <DropdownItem>
+                <Link to="#" className="nav-link text-dark">
+                  <i className="fa fa-user"></i> Profile
+                </Link>
+              </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem onClick={() => this.LogOut()}><Link to="/" className="nav-link text-dark"><i className="fa fa-lock"></i> Logout</Link></DropdownItem>
+              <DropdownItem onClick={() => this.LogOut()}>
+                <Link to="/" className="nav-link text-dark">
+                  <i className="fa fa-lock"></i> Logout
+                </Link>
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
-          </Nav>
+        </Nav>
         {/* <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>
               <img src={""} className="img-avatar" alt="admin" />
